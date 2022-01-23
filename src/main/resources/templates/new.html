@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>New User</title>
+</head>
+<body>
+<h2>Create new User</h2>
+<form th:method="POST" th:action="@{/admin/users}" th:object="${newUser}">
+    <p>
+        <label for="name">Name:</label>
+        <input type="text" th:field="*{name}" id="name">
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    </p>
+    <p>
+        <label for="age">Age:</label>
+        <input type="text" th:field="*{age}" id="age">
+    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>
+    </p>
+    <p>
+        <label for="email">Email:</label>
+        <input type="text" th:field="*{email}" id="email">
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+    </p>
+    <p>
+        <label for="password">Password:</label>
+        <input type="text" th:field="*{password}" id="password">
+    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+    </p>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <div class="form-group">
+            <select multiple size="2" name="rolesFromCreateUser" class="form-control">
+                <label class="control-label">User's Role:</label>
+                <option th:value="1">ROLE_ADMIN</option>
+                <option selected="selected" th:value="2">ROLE_USER</option>
+            </select>
+        </div>
+    </div>
+
+    <p>
+        <input type="submit" value="Create user"/>
+    </p>
+
+    <hr>
+    <p><a class="btn btn-lg btn-success" th:href="@{/home_page_for_all}" role="button">Return in home page</a></p>
+    <hr>
+</form>
+
+</body>
+</html>
